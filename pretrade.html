@@ -1,345 +1,532 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-Hant-HK">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>開市前重溫 · Pre-Trade Ritual</title>
+<title>開市前重溫 — Setup Journal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+HK:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;600;700;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#14171C; --panel:#1B1F26; --panel-2:#222732; --line:#2E3440;
-    --brass:#C8A24B; --brass-dim:#8A7536;
-    --go:#5FBE96; --warn:#DA6B57; --amber:#E0A458;
-    --text:#ECEAE3; --muted:#8B919E; --muted-2:#5E646F;
-    --disp:'Space Grotesk',sans-serif;
-    --cjk:'Noto Sans HK',sans-serif;
-    --mono:'JetBrains Mono',monospace;
+  :root {
+    /* warm charcoal surfaces — matches Setup Journal */
+    --bg-0:#15110d; --bg-1:#1c1711;
+    --surface-1:#221c15; --surface-2:#2a2218; --surface-3:#322819;
+    --line:#3a2f22; --line-soft:#2e261c;
+    --text-0:#f6ecdd; --text-1:#d8c8b2; --text-2:#a8957c; --text-3:#7a6a55;
+
+    /* restrained brass accent */
+    --brass:#C8A24B; --brass-soft:#a8843a; --brass-dim:rgba(200,162,75,.14);
+
+    /* clearance signal lights */
+    --red:#d6604f;   --red-bg:rgba(214,96,79,.13);   --red-glow:rgba(214,96,79,.55);
+    --amber:#e0a23c; --amber-bg:rgba(224,162,60,.13); --amber-glow:rgba(224,162,60,.55);
+    --green:#5fb377; --green-bg:rgba(95,179,119,.13); --green-glow:rgba(95,179,119,.55);
+    --slate:#7f93b0; --slate-bg:rgba(127,147,176,.13); --slate-glow:rgba(127,147,176,.5);
+
+    --radius:14px; --radius-sm:10px;
+    --hk:"Noto Sans HK", -apple-system, BlinkMacSystemFont, sans-serif;
+    --display:"Space Grotesk", var(--hk);
+    --mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-text-size-adjust:100%}
-  body{
-    background:var(--ink); color:var(--text);
-    font-family:var(--cjk); line-height:1.55;
-    padding:20px 16px 64px; min-height:100vh;
-    background-image:radial-gradient(circle at 50% -10%, #1d222b 0%, var(--ink) 55%);
+
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { -webkit-text-size-adjust:100%; }
+  body {
+    background:
+      radial-gradient(900px 520px at 50% -8%, rgba(200,162,75,.06), transparent 60%),
+      var(--bg-0);
+    background-attachment:fixed;
+    color:var(--text-0);
+    font-family:var(--hk);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    min-height:100vh;
   }
-  .wrap{max-width:680px;margin:0 auto}
+  ::selection { background:var(--brass); color:#1c1107; }
 
-  /* header */
-  .top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
-  .brand{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--brass);text-transform:uppercase}
-  .title{font-family:var(--disp);font-weight:700;font-size:26px;letter-spacing:-.01em;margin-top:2px}
-  .title .en{display:block;font-size:11px;font-family:var(--mono);letter-spacing:.18em;color:var(--muted-2);font-weight:500;margin-top:4px}
-  .meta{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;line-height:1.7}
-  .meta b{color:var(--text);font-weight:500}
+  .wrap { max-width:560px; margin:0 auto; padding:18px 16px 64px; }
 
-  /* clearance hero */
-  .clearance{
-    border:1px solid var(--line);border-radius:14px;overflow:hidden;
-    background:linear-gradient(160deg,var(--panel-2),var(--panel));
-    margin-bottom:22px;position:relative;
+  /* ---------- top label ---------- */
+  .topline {
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; margin-bottom:16px;
   }
-  .clearance::before{content:"";position:absolute;inset:0;
-    background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.012) 22px 23px);pointer-events:none}
-  .cl-row{display:flex;align-items:center;gap:16px;padding:18px 20px}
-  .lamp{width:46px;height:46px;border-radius:50%;flex:none;position:relative;
-    background:var(--warn);box-shadow:0 0 0 6px rgba(218,107,87,.12),0 0 22px rgba(218,107,87,.4);
-    transition:background .4s, box-shadow .4s}
-  .lamp::after{content:"";position:absolute;inset:11px;border-radius:50%;background:rgba(255,255,255,.18)}
-  body.cleared .lamp{background:var(--go);box-shadow:0 0 0 6px rgba(95,190,150,.14),0 0 26px rgba(95,190,150,.5);
-    animation:pulse 2.4s ease-in-out infinite}
-  @keyframes pulse{0%,100%{box-shadow:0 0 0 6px rgba(95,190,150,.14),0 0 26px rgba(95,190,150,.45)}50%{box-shadow:0 0 0 10px rgba(95,190,150,.06),0 0 34px rgba(95,190,150,.65)}}
-  .cl-text{flex:1;min-width:0}
-  .cl-status{font-family:var(--disp);font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--warn);transition:color .4s}
-  body.cleared .cl-status{color:var(--go)}
-  .cl-en{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);margin-top:3px}
-  .cl-count{font-family:var(--mono);font-size:13px;color:var(--muted);text-align:right;flex:none}
-  .cl-count b{display:block;font-size:24px;color:var(--text);font-weight:500}
-  .bar{height:3px;background:var(--line);position:relative}
-  .bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--brass);transition:width .35s ease, background .4s}
-  body.cleared .bar i{background:var(--go)}
+  .topline .mark {
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:11px; font-weight:500;
+    letter-spacing:1.5px; text-transform:uppercase; color:var(--text-3);
+  }
+  .topline .mark .dot { width:7px; height:7px; border-radius:2px; background:var(--brass); }
+  .topline a.back {
+    font-family:var(--mono); font-size:11px; letter-spacing:.5px;
+    color:var(--text-3); text-decoration:none; padding:6px 10px;
+    border:1px solid var(--line-soft); border-radius:8px; transition:.15s;
+  }
+  .topline a.back:hover { color:var(--text-1); border-color:var(--line); }
+  .topline a.back:focus-visible { outline:2px solid var(--brass); outline-offset:2px; }
 
-  /* sections */
-  .sec{border:1px solid var(--line);border-radius:12px;background:var(--panel);margin-bottom:14px;overflow:hidden}
-  .sec-head{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line)}
-  .sec-idx{font-family:var(--mono);font-size:11px;color:var(--brass);font-weight:700;letter-spacing:.05em}
-  .sec-name{font-weight:700;font-size:15px}
-  .sec-en{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--muted-2);text-transform:uppercase;margin-left:auto}
-  .sec-body{padding:6px 16px 12px}
-  .hint{font-size:12px;color:var(--muted);padding:8px 0 4px;line-height:1.5}
+  /* ---------- HERO clearance readout ---------- */
+  .hero {
+    position:relative; overflow:hidden;
+    border-radius:20px; padding:30px 24px 26px;
+    border:1px solid var(--line);
+    background:
+      radial-gradient(420px 200px at 50% -10%, var(--state-bg), transparent 70%),
+      linear-gradient(180deg, var(--surface-1), #1c160e);
+    text-align:center;
+    transition:border-color .5s;
+    --state-color:var(--red); --state-bg:var(--red-bg); --state-glow:var(--red-glow);
+  }
+  .hero[data-state="progress"] { --state-color:var(--amber); --state-bg:var(--amber-bg); --state-glow:var(--amber-glow); }
+  .hero[data-state="cleared"]  { --state-color:var(--green); --state-bg:var(--green-bg); --state-glow:var(--green-glow); border-color:rgba(95,179,119,.4); }
+  .hero[data-state="standdown"]{ --state-color:var(--slate); --state-bg:var(--slate-bg); --state-glow:var(--slate-glow); border-color:rgba(127,147,176,.35); }
 
-  /* check items */
-  .item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;cursor:pointer;border-bottom:1px solid rgba(46,52,64,.5)}
-  .item:last-child{border-bottom:none}
-  .box{width:21px;height:21px;border:1.5px solid var(--muted-2);border-radius:6px;flex:none;margin-top:1px;
-    display:grid;place-items:center;transition:border-color .2s,background .2s}
-  .box svg{width:12px;height:12px;opacity:0;transform:scale(.5);transition:opacity .2s,transform .2s}
-  .item.on .box{background:var(--go);border-color:var(--go)}
-  .item.on .box svg{opacity:1;transform:scale(1)}
-  .item-txt{font-size:14.5px;flex:1}
-  .item.on .item-txt{color:var(--muted)}
+  .hero .eyebrow {
+    font-family:var(--mono); font-size:11px; letter-spacing:2.5px;
+    text-transform:uppercase; color:var(--text-3); margin-bottom:18px;
+  }
 
-  /* radio (probability) */
-  .opt{display:flex;align-items:flex-start;gap:12px;padding:11px 0;cursor:pointer;border-bottom:1px solid rgba(46,52,64,.5)}
-  .opt:last-child{border-bottom:none}
-  .dot{width:21px;height:21px;border:1.5px solid var(--muted-2);border-radius:50%;flex:none;margin-top:1px;
-    display:grid;place-items:center;transition:border-color .2s}
-  .dot i{width:10px;height:10px;border-radius:50%;background:var(--brass);transform:scale(0);transition:transform .2s}
-  .opt.on .dot{border-color:var(--brass)}
-  .opt.on .dot i{transform:scale(1)}
-  .opt.noTrade.on .dot{border-color:var(--amber)} .opt.noTrade.on .dot i{background:var(--amber)}
-  .opt-txt{font-size:14.5px;flex:1}
-  .opt-txt small{display:block;color:var(--muted-2);font-family:var(--mono);font-size:11px;margin-top:2px}
+  /* the orb — signature element */
+  .orb-wrap { display:grid; place-items:center; margin-bottom:20px; height:108px; }
+  .orb {
+    position:relative; width:96px; height:96px; border-radius:50%;
+    background:
+      radial-gradient(circle at 38% 32%, color-mix(in oklab, var(--state-color) 90%, white 35%), var(--state-color) 55%, color-mix(in oklab, var(--state-color) 55%, black) 100%);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--state-color) 60%, transparent),
+      0 0 38px -2px var(--state-glow),
+      inset 0 -10px 22px -8px rgba(0,0,0,.55),
+      inset 0 8px 16px -6px rgba(255,255,255,.35);
+    transition:background .5s, box-shadow .5s;
+  }
+  .orb::before {
+    content:""; position:absolute; inset:-14px; border-radius:50%;
+    border:1px solid color-mix(in oklab, var(--state-color) 50%, transparent);
+    opacity:.5;
+  }
+  .orb.pulse::after {
+    content:""; position:absolute; inset:0; border-radius:50%;
+    box-shadow:0 0 0 0 var(--state-glow);
+    animation:ring 2.4s ease-out infinite;
+  }
+  @keyframes ring {
+    0% { box-shadow:0 0 0 0 var(--state-glow); opacity:.7; }
+    100% { box-shadow:0 0 0 26px transparent; opacity:0; }
+  }
 
-  /* mantra strip */
-  .mantra{border:1px solid var(--brass-dim);border-radius:12px;background:linear-gradient(135deg,rgba(200,162,75,.08),rgba(200,162,75,.02));
-    padding:18px 20px;margin-bottom:14px;min-height:84px;display:flex;align-items:center;gap:14px}
-  .mantra-q{font-family:var(--disp);font-size:32px;line-height:1;color:var(--brass);flex:none;opacity:.6}
-  .mantra-t{font-size:16px;font-weight:500;line-height:1.5}
-  .mantra-nav{font-family:var(--mono);font-size:10px;color:var(--muted-2);text-align:right;letter-spacing:.1em;margin-top:8px;cursor:pointer;user-select:none}
-  .mantra-nav:hover{color:var(--brass)}
+  .status-big {
+    font-family:var(--hk); font-weight:900; font-size:30px;
+    letter-spacing:-.5px; color:var(--state-color); line-height:1.1;
+  }
+  .status-en {
+    font-family:var(--mono); font-size:12px; font-weight:500;
+    letter-spacing:3px; text-transform:uppercase;
+    color:var(--text-2); margin-top:8px;
+  }
 
-  /* rubric (collapsible) */
-  details.rubric{border:1px solid var(--line);border-radius:12px;background:var(--panel);margin-bottom:14px;overflow:hidden}
-  details.rubric>summary{list-style:none;cursor:pointer;padding:13px 16px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
-  details.rubric>summary::-webkit-details-marker{display:none}
-  .chev{margin-left:auto;color:var(--muted);font-family:var(--mono);transition:transform .2s}
-  details[open].rubric .chev{transform:rotate(90deg)}
-  .rub-body{padding:4px 16px 14px}
-  .grade{display:flex;gap:13px;padding:11px 0;border-bottom:1px solid rgba(46,52,64,.5)}
-  .grade:last-child{border-bottom:none}
-  .score{font-family:var(--mono);font-weight:700;font-size:15px;flex:none;width:46px;text-align:center;padding-top:1px}
-  .g10 .score{color:var(--go)} .g8 .score{color:var(--text)} .g3 .score{color:var(--amber)} .g0 .score{color:var(--warn)}
-  .grade b{font-size:14px} .grade p{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.5}
+  .progress {
+    margin:22px auto 12px; height:8px; max-width:340px;
+    background:var(--surface-3); border-radius:20px; overflow:hidden;
+    border:1px solid var(--line-soft);
+  }
+  .progress .bar {
+    height:100%; width:0%; border-radius:20px;
+    background:linear-gradient(90deg, color-mix(in oklab, var(--state-color) 70%, black), var(--state-color));
+    box-shadow:0 0 12px -2px var(--state-glow);
+    transition:width .45s cubic-bezier(.2,.8,.2,1), background .5s;
+  }
+  .count {
+    font-family:var(--mono); font-size:13px; color:var(--text-2); letter-spacing:.5px;
+  }
+  .count b { color:var(--state-color); font-weight:700; font-size:15px; }
 
-  .foot{font-size:12.5px;color:var(--muted);line-height:1.6;border-top:1px solid var(--line);margin-top:24px;padding-top:16px}
-  .foot b{color:var(--brass);font-weight:500}
-  .reset{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
-    color:var(--muted);background:none;border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;text-transform:uppercase}
-  .reset:hover{color:var(--text);border-color:var(--muted-2)}
+  /* ---------- sections ---------- */
+  .sec { margin-top:22px; }
+  .sec-head { display:flex; align-items:baseline; gap:11px; margin-bottom:6px; padding:0 2px; }
+  .sec-key {
+    font-family:var(--display); font-weight:700; font-size:13px;
+    width:26px; height:26px; flex-shrink:0; border-radius:8px;
+    display:grid; place-items:center;
+    color:var(--brass); background:var(--brass-dim);
+    border:1px solid rgba(200,162,75,.3);
+  }
+  .sec-head h2 { font-family:var(--hk); font-size:17px; font-weight:700; letter-spacing:-.2px; }
+  .sec-head .en { font-family:var(--mono); font-size:11px; color:var(--text-3); letter-spacing:1px; text-transform:uppercase; }
+  .sec-head .req {
+    margin-left:auto; font-family:var(--mono); font-size:10.5px; letter-spacing:.5px;
+    color:var(--text-3); padding-top:4px; white-space:nowrap;
+  }
+  .sec-hint {
+    font-size:13px; color:var(--text-2); margin:0 2px 12px;
+    padding:9px 12px; border-left:2px solid var(--brass-soft);
+    background:var(--surface-1); border-radius:0 8px 8px 0;
+    line-height:1.5;
+  }
 
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-  @media (max-width:480px){
-    .title{font-size:22px}.cl-status{font-size:18px}.mantra-t{font-size:15px}
-    .meta{text-align:left;width:100%}
+  .items { display:flex; flex-direction:column; gap:9px; }
+
+  /* a single check / radio row — big tap target */
+  .item {
+    display:flex; align-items:flex-start; gap:14px;
+    padding:15px 16px; min-height:58px;
+    background:linear-gradient(180deg, var(--surface-1), #1f190f);
+    border:1px solid #2e261c; border-radius:var(--radius);
+    cursor:pointer; user-select:none;
+    transition:border-color .15s, background .15s, transform .08s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .item:hover { border-color:#3a2f22; }
+  .item:active { transform:scale(.992); }
+  .item .ctrl { position:absolute; opacity:0; width:1px; height:1px; pointer-events:none; }
+
+  .box {
+    flex-shrink:0; width:26px; height:26px; margin-top:1px;
+    border:2px solid #3a2f22; border-radius:8px;
+    background:#322819;
+    display:grid; place-items:center;
+  }
+  .box.radio { border-radius:50%; }
+  .box svg { width:15px; height:15px; opacity:0; transform:scale(.5); color:#1c1107; }
+  .box .rdot { width:11px; height:11px; border-radius:50%; background:#1c1107; opacity:0; transform:scale(.4); }
+
+  .item .label { flex:1; }
+  .item .label .main { display:block; font-size:15px; font-weight:500; color:var(--text-1); line-height:1.45; }
+  .item .label .sub { display:block; font-size:12px; color:var(--text-3); margin-top:3px; font-family:var(--mono); letter-spacing:.3px; line-height:1.45; }
+
+  /* checked state (pass-green) */
+  .item.on { border-color:rgba(95,179,119,.4); background:linear-gradient(180deg, var(--green-bg), #1f190f); }
+  .item.on .box { border-color:#5fb377; background:#5fb377; }
+  .item.on .box svg { opacity:1; transform:scale(1); }
+  .item.on .box .rdot { opacity:1; transform:scale(1); }
+  .item.on .label .main { color:var(--text-0); }
+
+  /* the NO-TRADE radio is special: amber/stand-down framing */
+  .item.notrade.on { border-color:rgba(127,147,176,.45); background:linear-gradient(180deg, var(--slate-bg), #1f190f); }
+  .item.notrade.on .box { border-color:#7f93b0; background:#7f93b0; }
+  .item.notrade .label .main { font-weight:600; }
+  .item.notrade .label .sub { color:var(--amber); }
+
+  /* keyboard focus */
+  .ctrl:focus-visible + .box { outline:2px solid var(--brass); outline-offset:3px; }
+
+  /* ---------- mantra ---------- */
+  .mantra {
+    margin-top:26px; position:relative; overflow:hidden;
+    border:1px solid var(--line); border-radius:var(--radius);
+    background:
+      radial-gradient(300px 120px at 0% 0%, var(--brass-dim), transparent 70%),
+      linear-gradient(180deg, var(--surface-2), var(--surface-1));
+    padding:22px 22px 18px;
+  }
+  .mantra .quote-mark {
+    font-family:var(--display); font-size:54px; line-height:.6; color:var(--brass);
+    opacity:.35; height:24px; display:block;
+  }
+  .mantra .q {
+    font-size:19px; font-weight:600; line-height:1.55; color:var(--text-0);
+    letter-spacing:-.2px; min-height:60px; display:flex; align-items:center;
+    transition:opacity .25s;
+  }
+  .mantra .q.fade { opacity:0; }
+  .mantra .mfoot { display:flex; align-items:center; justify-content:space-between; margin-top:12px; }
+  .mantra .dots { display:flex; gap:6px; }
+  .mantra .dots i { width:6px; height:6px; border-radius:50%; background:var(--line); transition:background .25s, transform .25s; }
+  .mantra .dots i.on { background:var(--brass); transform:scale(1.25); }
+  .mantra .next {
+    font-family:var(--mono); font-size:12px; font-weight:500; letter-spacing:.5px;
+    color:var(--brass); background:var(--brass-dim);
+    border:1px solid rgba(200,162,75,.3); border-radius:9px;
+    padding:8px 14px; cursor:pointer; display:inline-flex; align-items:center; gap:7px;
+    transition:.15s; min-height:40px;
+  }
+  .mantra .next:hover { background:rgba(200,162,75,.22); color:#e6c879; }
+  .mantra .next:focus-visible { outline:2px solid var(--brass); outline-offset:2px; }
+  .mantra .next svg { width:14px; height:14px; }
+
+  /* ---------- collapsible rubric ---------- */
+  details.rubric {
+    margin-top:26px; border:1px solid var(--line-soft); border-radius:var(--radius);
+    background:linear-gradient(180deg, var(--surface-1), #1f190f); overflow:hidden;
+  }
+  details.rubric summary {
+    list-style:none; cursor:pointer; padding:17px 18px;
+    display:flex; align-items:center; gap:12px;
+    font-size:15px; font-weight:600; color:var(--text-1);
+    min-height:56px; transition:background .15s;
+  }
+  details.rubric summary::-webkit-details-marker { display:none; }
+  details.rubric summary:hover { background:var(--surface-1); }
+  details.rubric summary:focus-visible { outline:2px solid var(--brass); outline-offset:-2px; }
+  details.rubric summary .ico {
+    width:30px; height:30px; flex-shrink:0; border-radius:8px;
+    display:grid; place-items:center; color:var(--brass); background:var(--brass-dim);
+    border:1px solid rgba(200,162,75,.3);
+  }
+  details.rubric summary .sub { font-family:var(--mono); font-size:11px; color:var(--text-3); font-weight:400; letter-spacing:.3px; margin-top:2px; }
+  details.rubric summary .caret { margin-left:auto; color:var(--text-3); transition:transform .2s; }
+  details.rubric[open] summary .caret { transform:rotate(180deg); }
+  .rubric-body { padding:4px 18px 18px; }
+  .rubric-intro {
+    font-size:12.5px; color:var(--text-3); line-height:1.55;
+    margin-bottom:14px; padding:10px 12px; background:var(--surface-3);
+    border-radius:8px;
+  }
+  .score {
+    display:flex; align-items:flex-start; gap:14px; padding:14px 0;
+    border-top:1px solid var(--line-soft);
+  }
+  .score:first-child { border-top:0; }
+  .score .num {
+    flex-shrink:0; width:46px; height:46px; border-radius:11px;
+    display:grid; place-items:center; font-family:var(--mono); font-weight:700; font-size:19px;
+    border:1px solid;
+  }
+  .score.s-green .num { color:var(--green); background:var(--green-bg); border-color:rgba(95,179,119,.35); }
+  .score.s-brass .num { color:var(--brass); background:var(--brass-dim); border-color:rgba(200,162,75,.3); }
+  .score.s-amber .num { color:var(--amber); background:var(--amber-bg); border-color:rgba(224,162,60,.32); }
+  .score.s-red .num   { color:var(--red);   background:var(--red-bg);   border-color:rgba(214,96,79,.35); }
+  .score .st { flex:1; }
+  .score .st .t { font-size:14.5px; font-weight:700; color:var(--text-0); }
+  .score .st .d { font-size:13px; color:var(--text-2); margin-top:3px; line-height:1.5; }
+
+  /* ---------- footer reset ---------- */
+  .resetline { text-align:center; margin-top:30px; }
+  .resetline button {
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.5px;
+    color:var(--text-3); background:transparent; border:1px solid var(--line-soft);
+    border-radius:9px; padding:9px 16px; cursor:pointer; transition:.15s; min-height:40px;
+  }
+  .resetline button:hover { color:var(--text-1); border-color:var(--line); }
+  .resetline button:focus-visible { outline:2px solid var(--brass); outline-offset:2px; }
+
+  @media (max-width:380px) {
+    .status-big { font-size:25px; }
+    .wrap { padding:16px 13px 56px; }
+    .item { padding:14px 13px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation:none !important; transition:none !important; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="top">
-    <div>
-      <div class="brand">SJ · Trade Journal</div>
-      <h1 class="title">開市前重溫<span class="en">PRE-TRADE RITUAL</span></h1>
-    </div>
-    <div class="meta" id="meta"></div>
+  <div class="topline">
+    <div class="mark"><span class="dot"></span>開市前重溫 · PRE-FLIGHT</div>
+    <a class="back" href="index.html">← 返 Dashboard</a>
   </div>
 
-  <!-- HERO: clearance readout -->
-  <section class="clearance" aria-live="polite">
-    <div class="cl-row">
-      <div class="lamp" aria-hidden="true"></div>
-      <div class="cl-text">
-        <div class="cl-status" id="status">未可開倉</div>
-        <div class="cl-en" id="statusEn">NOT CLEARED — RUN THE CHECKS</div>
-      </div>
-      <div class="cl-count"><b id="done">0</b>/<span id="total">11</span></div>
-    </div>
-    <div class="bar"><i id="fill"></i></div>
-  </section>
+  <!-- ===== HERO clearance readout ===== -->
+  <header class="hero" id="hero" data-state="not" role="status" aria-live="polite">
+    <div class="eyebrow">CLEARANCE STATUS</div>
+    <div class="orb-wrap"><div class="orb" id="orb"></div></div>
+    <div class="status-big" id="statusBig">未可開倉</div>
+    <div class="status-en" id="statusEn">NOT CLEARED</div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="count">完成 <b id="cDone">0</b><span id="cTotal" style="color:var(--text-3)">/11</span> 項 critical</div>
+  </header>
 
-  <!-- mantra -->
-  <section class="mantra">
-    <div class="mantra-q">“</div>
-    <div>
-      <div class="mantra-t" id="mantra"></div>
-      <div class="mantra-nav" id="mantraNav" role="button" tabindex="0">下一句 →</div>
+  <!-- ===== A 客觀 ===== -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-key">A</span>
+      <h2>客觀 <span class="en">Objectivity</span></h2>
+      <span class="req">四個都要勾</span>
     </div>
-  </section>
-
-  <!-- A 客觀 -->
-  <section class="sec" data-group="objectivity">
-    <div class="sec-head"><span class="sec-idx">A</span><span class="sec-name">客觀</span><span class="sec-en">Objectivity</span></div>
-    <div class="sec-body">
-      <p class="hint">客觀唔係「我好理性」,係內心冇咗壓力同恐懼。四個都係真,先入得。</p>
+    <p class="sec-hint">客觀唔係「我好理性」,係內心冇咗壓力同恐懼。</p>
+    <div class="items" data-group="A">
+      <label class="item"><input type="checkbox" class="ctrl crit"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="label"><span class="main">我冇「一定要入場」嘅壓力</span></span></label>
+      <label class="item"><input type="checkbox" class="ctrl crit"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="label"><span class="main">我冇恐懼嘅感覺</span></span></label>
+      <label class="item"><input type="checkbox" class="ctrl crit"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="label"><span class="main">我冇覺得個市針對緊我</span></span></label>
+      <label class="item"><input type="checkbox" class="ctrl crit"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="label"><span class="main">我接受呢單冇所謂啱定錯 — 輸唔代表我錯</span></span></label>
     </div>
   </section>
 
-  <!-- B 機率 -->
-  <section class="sec" data-group="probability">
-    <div class="sec-head"><span class="sec-idx">B</span><span class="sec-name">機率</span><span class="sec-en">Probability</span></div>
-    <div class="sec-body" id="probBody">
-      <p class="hint">入場只有三個理由。揀一個 — 如果一個都對唔上,「今日唔交易」都係一個正確決定。</p>
+  <!-- ===== B 機率 ===== -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-key">B</span>
+      <h2>機率 <span class="en">Probability</span></h2>
+      <span class="req">揀一個</span>
+    </div>
+    <p class="sec-hint">入場只有三個理由。對唔上就揀「今日唔交易」,呢個都係正確決定。</p>
+    <div class="items" data-group="B">
+      <label class="item"><input type="radio" name="prob" class="ctrl" value="new"><span class="box radio"><span class="rdot"></span></span><span class="label"><span class="main">新入場</span><span class="sub">有 setup + price action / volume / time 做證據</span></span></label>
+      <label class="item"><input type="radio" name="prob" class="ctrl" value="manage"><span class="box radio"><span class="rdot"></span></span><span class="label"><span class="main">現有倉獲利</span><span class="sub">管理緊一個已經 work 緊嘅倉</span></span></label>
+      <label class="item"><input type="radio" name="prob" class="ctrl" value="add"><span class="box radio"><span class="rdot"></span></span><span class="label"><span class="main">加碼</span><span class="sub">順勢加注,唔係溝淡</span></span></label>
+      <label class="item notrade"><input type="radio" name="prob" class="ctrl" value="notrade"><span class="box radio"><span class="rdot"></span></span><span class="label"><span class="main">今日唔具備條件 → 唔交易</span><span class="sub">NO TRADE · 呢個都係正確決定</span></span></label>
     </div>
   </section>
 
-  <!-- C 風險 -->
-  <section class="sec" data-group="risk">
-    <div class="sec-head"><span class="sec-idx">C</span><span class="sec-name">風險</span><span class="sec-en">Risk</span></div>
-    <div class="sec-body"></div>
-  </section>
-
-  <!-- D 心態 -->
-  <section class="sec" data-group="mindset">
-    <div class="sec-head"><span class="sec-idx">D</span><span class="sec-name">心態</span><span class="sec-en">Mindset · 三個唔</span></div>
-    <div class="sec-body">
-      <p class="hint">呢三樣會偷你錢。三個都係「唔係」,先入得。</p>
+  <!-- ===== C 風險 ===== -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-key">C</span>
+      <h2>風險 <span class="en">Risk</span></h2>
+      <span class="req">三個都要勾</span>
+    </div>
+    <div class="items" data-group="C">
+      <label class="item"><input type="checkbox" class="ctrl crit"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="label"><span class="main">止蝕位 / SL 已經定好,落單前就知喺邊</span></span></label>
+      <label class="item"><input type="checkbox" class="ctrl crit"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="label"><span class="main">單筆風險 ≤ 帳戶 1–2%</span></span></label>
+      <label class="item"><input type="checkbox" class="ctrl crit"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="label"><span class="main">我有 Plan B — 跌穿 / 爆掉嘅應對已諗好</span></span></label>
     </div>
   </section>
 
-  <!-- post-trade rubric -->
+  <!-- ===== D 心態 ===== -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-key">D</span>
+      <h2>心態 · 三個唔 <span class="en">Mindset</span></h2>
+      <span class="req">三個都要係「唔係」</span>
+    </div>
+    <p class="sec-hint">呢三樣會偷你錢,三個都要係「唔係」先 pass。</p>
+    <div class="items" data-group="D">
+      <label class="item"><input type="checkbox" class="ctrl crit"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="label"><span class="main">我而家唔係喺度報復</span><span class="sub">追返之前嘅蝕</span></span></label>
+      <label class="item"><input type="checkbox" class="ctrl crit"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="label"><span class="main">我而家唔係喺度同人比較 / 追人哋嘅 setup</span></span></label>
+      <label class="item"><input type="checkbox" class="ctrl crit"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><span class="label"><span class="main">我而家唔係靠交易證明自己叻</span></span></label>
+    </div>
+  </section>
+
+  <!-- ===== Mantra ===== -->
+  <section class="mantra" aria-label="心法">
+    <span class="quote-mark">&ldquo;</span>
+    <div class="q" id="mantraQ"></div>
+    <div class="mfoot">
+      <div class="dots" id="mantraDots"></div>
+      <button class="next" id="mantraNext" type="button">
+        下一句
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== Post-market rubric ===== -->
   <details class="rubric">
-    <summary>收市後:執行力評分 <span class="chev">›</span></summary>
-    <div class="rub-body">
-      <p class="hint" style="padding-top:0">以執行力計輸贏,唔以盈虧計。0/3 嗰下係<b style="color:var(--text)">問責(對事唔對人)</b>,唔係自我羞辱 — 止蝕係執行,唔係認錯。</p>
-      <div class="grade g10"><span class="score">10</span><div><b>英雄式止蝕</b><p>完全跟 Plan、夠果斷止蝕。就算輸錢都係贏 — 大讚,去食餐好。</p></div></div>
-      <div class="grade g8"><span class="score">8</span><div><b>標準執格仔</b><p>跟 Plan 贏錢,中規中矩。平常心,唔使特別慶祝。</p></div></div>
-      <div class="grade g3"><span class="score">3</span><div><b>毒藥獲利</b><p>亂入、冇跟 Plan 但執到錢。最危險的隨機獎勵 — 鬧醒自己,聽日停手。</p></div></div>
-      <div class="grade g0"><span class="score">0</span><div><b>情緒化爆倉風險</b><p>唔止蝕、報復、亂加倉。重設機制:聽日禁止開倉,保護資金。</p></div></div>
+    <summary>
+      <span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+      <span>收市後評分<div class="sub">以執行力計,唔以盈虧計</div></span>
+      <span class="caret"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+    </summary>
+    <div class="rubric-body">
+      <p class="rubric-intro">0/3 係問責,對事唔對人,唔係自我羞辱。</p>
+      <div class="score s-green">
+        <div class="num">10</div>
+        <div class="st"><div class="t">英雄式止蝕</div><div class="d">完全跟 Plan、夠果斷止蝕,就算輸錢都係贏。</div></div>
+      </div>
+      <div class="score s-brass">
+        <div class="num">8</div>
+        <div class="st"><div class="t">標準執格仔</div><div class="d">跟 Plan 贏錢,中規中矩,平常心。</div></div>
+      </div>
+      <div class="score s-amber">
+        <div class="num">3</div>
+        <div class="st"><div class="t">毒藥獲利</div><div class="d">亂入冇跟 Plan 但執到錢,最危險,鬧醒自己聽日停手。</div></div>
+      </div>
+      <div class="score s-red">
+        <div class="num">0</div>
+        <div class="st"><div class="t">情緒化爆倉風險</div><div class="d">唔止蝕 / 報復 / 亂加倉,重設:聽日禁止開倉。</div></div>
+      </div>
     </div>
   </details>
 
-  <p class="foot">
-    <b>點樣同 Journal 結合:</b>呢頁係你開市前嘅閘口 — 全部勾晒先開倉。收市後,將每單嘅<b> execution rating(0/3/8/10)</b>同當時情緒寫落 Trade Journal 個 <b>Notebook</b>;週末睇返平均 rating 嘅趨勢,而唔係單晚嘅盈虧。記住:你嘅 edge 喺成個分佈,單一筆嘅輸贏唔代表方法 work 唔 work。
-    <br><button class="reset" id="reset">↺ 重設今日 Checklist</button>
-  </p>
+  <div class="resetline">
+    <button type="button" id="resetBtn">↺ 重新開始呢次重溫</button>
+  </div>
 
 </div>
 
 <script>
-(function(){
-  // ---- data ----
-  var objectivity = [
-    "我冇「一定要入場」嘅壓力",
-    "我冇恐懼嘅感覺",
-    "我冇覺得個市針對緊我",
-    "我接受呢單冇所謂啱定錯 — 輸唔代表我錯"
-  ];
-  var probability = [
-    {t:"新入場",s:"有 setup + price action / volume / time 做證據"},
-    {t:"現有倉獲利",s:"管理緊一個已經 work 緊嘅倉"},
-    {t:"加碼",s:"順勢加注,唔係溝淡"},
-    {t:"今日唔具備條件 → 唔交易",s:"NO TRADE — 呢個都係正確決定",noTrade:true}
-  ];
-  var risk = [
-    "止蝕位 / SL 已經定好,落單前就知喺邊",
-    "單筆風險 ≤ 帳戶 1–2%",
-    "我有 Plan B — 跌穿 / 爆掉嘅應對已諗好"
-  ];
-  var mindset = [
-    "我而家唔係喺度報復(追返之前嘅蝕)",
-    "我而家唔係喺度同人比較 / 追人哋嘅 setup",
-    "我而家唔係靠交易證明自己叻"
-  ];
-  var mantras = [
+(function () {
+  "use strict";
+
+  var TOTAL = 11; // A4 + C3 + D3 + B(1)
+
+  var hero      = document.getElementById("hero");
+  var orb       = document.getElementById("orb");
+  var statusBig = document.getElementById("statusBig");
+  var statusEn  = document.getElementById("statusEn");
+  var bar       = document.getElementById("bar");
+  var cDone     = document.getElementById("cDone");
+
+  var crit  = Array.prototype.slice.call(document.querySelectorAll(".crit"));
+  var probs = Array.prototype.slice.call(document.querySelectorAll('input[name="prob"]'));
+
+  function probValue() {
+    for (var i = 0; i < probs.length; i++) if (probs[i].checked) return probs[i].value;
+    return null;
+  }
+
+  function render() {
+    // toggle .on visual on each item row
+    crit.forEach(function (c) { c.closest(".item").classList.toggle("on", c.checked); });
+    probs.forEach(function (p) { p.closest(".item").classList.toggle("on", p.checked); });
+
+    var checked = crit.filter(function (c) { return c.checked; }).length;
+    var pv = probValue();
+    var done = checked + (pv ? 1 : 0);
+
+    var state, big, en, pulse;
+    if (done === 0) {
+      state = "not"; big = "未可開倉"; en = "NOT CLEARED"; pulse = false;
+    } else if (done < TOTAL) {
+      state = "progress"; big = "重溫緊…"; en = "REVIEWING"; pulse = false;
+    } else if (pv === "notrade") {
+      state = "standdown"; big = "今日唔交易 ✓"; en = "STAND DOWN"; pulse = true;
+    } else {
+      state = "cleared"; big = "可以開倉 ✓"; en = "CLEARED FOR ENTRY"; pulse = true;
+    }
+
+    hero.setAttribute("data-state", state);
+    statusBig.textContent = big;
+    statusEn.textContent = en;
+    bar.style.width = (done / TOTAL * 100) + "%";
+    cDone.textContent = done;
+    orb.classList.toggle("pulse", pulse);
+  }
+
+  crit.forEach(function (c) { c.addEventListener("change", render); });
+  probs.forEach(function (p) { p.addEventListener("change", render); });
+
+  // ---- Mantra rotator ----
+  var MANTRAS = [
     "我唔係慶祝賺錢,我係慶祝我夠紀律。",
     "跟 Plan 輸錢係生意成本。",
     "亂入贏錢係自殺,呢啲錢攞咗會折福。",
     "市場冇對錯,只有我有冇執行 Stop Loss。",
     "輸錢可以贏返,但輸咗紀律就係一世失敗。"
   ];
+  var mQ = document.getElementById("mantraQ");
+  var mDots = document.getElementById("mantraDots");
+  var mNext = document.getElementById("mantraNext");
+  var mIdx = Math.floor(Math.random() * MANTRAS.length);
 
-  var checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+  MANTRAS.forEach(function () { var i = document.createElement("i"); mDots.appendChild(i); });
+  var dotEls = Array.prototype.slice.call(mDots.children);
 
-  // critical items = objectivity + risk + mindset (10) + must pick a probability option (1) = 11
-  var TOTAL = objectivity.length + risk.length + mindset.length + 1;
-  document.getElementById('total').textContent = TOTAL;
-
-  var state = { checks:{}, prob:null };
-
-  // ---- build checklist items ----
-  function buildChecks(group, arr){
-    var body = document.querySelector('.sec[data-group="'+group+'"] .sec-body');
-    arr.forEach(function(txt,i){
-      var id = group+'-'+i;
-      var el = document.createElement('div');
-      el.className='item'; el.setAttribute('role','checkbox'); el.setAttribute('aria-checked','false'); el.tabIndex=0;
-      el.innerHTML='<span class="box">'+checkSvg+'</span><span class="item-txt">'+txt+'</span>';
-      el.addEventListener('click', function(){ toggle(el,id); });
-      el.addEventListener('keydown', function(e){ if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle(el,id);} });
-      body.appendChild(el);
-    });
+  function paintMantra() {
+    mQ.textContent = MANTRAS[mIdx];
+    dotEls.forEach(function (d, i) { d.classList.toggle("on", i === mIdx); });
   }
-  function toggle(el,id){
-    state.checks[id]=!state.checks[id];
-    el.classList.toggle('on',state.checks[id]);
-    el.setAttribute('aria-checked',state.checks[id]?'true':'false');
+  function nextMantra() {
+    mQ.classList.add("fade");
+    setTimeout(function () {
+      mIdx = (mIdx + 1) % MANTRAS.length;
+      paintMantra();
+      mQ.classList.remove("fade");
+    }, 200);
+  }
+  mNext.addEventListener("click", nextMantra);
+  paintMantra();
+
+  // ---- Reset ----
+  document.getElementById("resetBtn").addEventListener("click", function () {
+    crit.forEach(function (c) { c.checked = false; });
+    probs.forEach(function (p) { p.checked = false; });
     render();
-  }
-  buildChecks('objectivity',objectivity);
-  buildChecks('risk',risk);
-  buildChecks('mindset',mindset);
-
-  // ---- probability radio ----
-  var pb = document.getElementById('probBody');
-  probability.forEach(function(o,i){
-    var el=document.createElement('div');
-    el.className='opt'+(o.noTrade?' noTrade':''); el.setAttribute('role','radio'); el.setAttribute('aria-checked','false'); el.tabIndex=0;
-    el.innerHTML='<span class="dot"><i></i></span><span class="opt-txt">'+o.t+'<small>'+o.s+'</small></span>';
-    el.addEventListener('click', function(){ pickProb(i); });
-    el.addEventListener('keydown', function(e){ if(e.key===' '||e.key==='Enter'){e.preventDefault();pickProb(i);} });
-    pb.appendChild(el);
-  });
-  function pickProb(i){
-    state.prob=i;
-    pb.querySelectorAll('.opt').forEach(function(o,j){
-      o.classList.toggle('on',j===i); o.setAttribute('aria-checked',j===i?'true':'false');
-    });
-    render();
-  }
-
-  // ---- render clearance ----
-  function render(){
-    var done=0;
-    Object.keys(state.checks).forEach(function(k){ if(state.checks[k]) done++; });
-    if(state.prob!==null) done++;
-    var cleared = done===TOTAL;
-    var noTrade = probability[state.prob] && probability[state.prob].noTrade;
-
-    document.getElementById('done').textContent=done;
-    document.getElementById('fill').style.width=(done/TOTAL*100)+'%';
-    document.body.classList.toggle('cleared',cleared);
-
-    var st=document.getElementById('status'), en=document.getElementById('statusEn');
-    if(cleared && noTrade){
-      st.textContent='今日唔交易 ✓'; en.textContent='STAND DOWN — A VALID DECISION';
-    } else if(cleared){
-      st.textContent='可以開倉 ✓'; en.textContent='CLEARED FOR ENTRY';
-    } else if(done===0){
-      st.textContent='未可開倉'; en.textContent='NOT CLEARED — RUN THE CHECKS';
-    } else {
-      st.textContent='重溫緊…'; en.textContent='RUNNING CHECKS · '+(TOTAL-done)+' LEFT';
-    }
-  }
-
-  // ---- mantra rotation ----
-  var mi=Math.floor(Math.random()*mantras.length);
-  function showMantra(){ document.getElementById('mantra').textContent=mantras[mi]; }
-  showMantra();
-  function nextMantra(){ mi=(mi+1)%mantras.length; showMantra(); }
-  document.getElementById('mantraNav').addEventListener('click',nextMantra);
-  document.getElementById('mantraNav').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();nextMantra();}});
-
-  // ---- meta date / session ----
-  function fmt(){
-    var d=new Date();
-    var days=['日','一','二','三','四','五','六'];
-    var date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    var h=d.getHours();
-    var sess = (h>=20||h<5)?'US session 時段':(h>=14&&h<20)?'歐美前段':'亞洲時段';
-    document.getElementById('meta').innerHTML='<b>'+date+'</b> 星期'+days[d.getDay()]+'<br>'+sess;
-  }
-  fmt();
-
-  // ---- reset ----
-  document.getElementById('reset').addEventListener('click',function(){
-    state={checks:{},prob:null};
-    document.querySelectorAll('.item.on').forEach(function(e){e.classList.remove('on');e.setAttribute('aria-checked','false');});
-    document.querySelectorAll('.opt.on').forEach(function(e){e.classList.remove('on');e.setAttribute('aria-checked','false');});
-    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
   render();
